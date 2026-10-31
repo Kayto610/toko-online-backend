@@ -16,7 +16,17 @@ app.set('trust proxy', 1);
 
 // middleware
 app.use(helmet());
-app.use(cors({ origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*' }));
+
+// Konfigurasi CORS agar mengizinkan http://localhost:3000
+const allowedOrigins = process.env.CORS_ORIGIN 
+  ? process.env.CORS_ORIGIN.split(',') 
+  : ['http://localhost:3000'];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 app.use(express.json({ limit: '1mb' }));
 
 // batasi percobaan login/register (anti brute-force)
