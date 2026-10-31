@@ -18,9 +18,11 @@ app.set('trust proxy', 1);
 app.use(helmet());
 
 // Konfigurasi CORS agar mengizinkan http://localhost:3000
-const allowedOrigins = process.env.CORS_ORIGIN 
-  ? process.env.CORS_ORIGIN.split(',') 
-  : ['http://localhost:3000'];
+const allowedOrigins = [
+  'http://localhost:3000',                     // Environment Lokal (Next.js dev)
+  'https://toko-online-web.vercel.app',        // Production Vercel (Domain Utama)
+  /\.vercel\.app$/                             // Regex untuk mengizinkan semua Preview Deployments dari Vercel
+];
 
 app.use(cors({
   origin: allowedOrigins,
